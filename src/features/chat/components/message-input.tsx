@@ -4,15 +4,19 @@ import { Input } from "@/components/ui/input"
 import { SendIcon } from "lucide-react"
 import { useSocket } from "@/features/socket/hooks/useSocket"
 
-export const MessageInput = () => {
+interface Props {
+  onSend: (content: string) => void
+}
+
+export const MessageInput = ({ onSend }: Props) => {
   const { socket } = useSocket()
   const [content, setContent] = useState("")
 
   const sendMessage = () => {
     if (!content.trim()) return
     socket.emit("send_message", { content })
-    console.log('[socket] Sending message: ' + content);
-    
+    console.log('[socket] Sending message: ' + content)
+    onSend(content)
     setContent("")
   }
 
@@ -21,16 +25,14 @@ export const MessageInput = () => {
   }
 
   return (
-    <div className="px-4 flex gap-2">
+    <div className="flex gap-2">
       <Input
         placeholder="Escribe un mensaje"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <Button 
-        onClick={sendMessage} className="flex items-center justify-center"
-      >
+      <Button onClick={sendMessage} className="flex items-center justify-center">
         <SendIcon/>
       </Button>
     </div>

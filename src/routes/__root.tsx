@@ -14,7 +14,7 @@ const RootLayout = () => (
     </div>
     <hr />
     <Outlet />
-    <TanStackRouterDevtools />
+    <TanStackRouterDevtools position='top-left'/>
   </TooltipProvider>
 )
 
