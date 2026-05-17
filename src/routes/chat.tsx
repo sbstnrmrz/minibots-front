@@ -6,7 +6,7 @@ import { SocketProvider } from '../features/socket/SocketProvider'
 
 const ChatLayout = () => (
   <SocketProvider>
-    <SidebarProvider style={{ '--sidebar-width': '19rem' } as React.CSSProperties}>
+    <SidebarProvider className="h-svh overflow-hidden" style={{ '--sidebar-width': '19rem' } as React.CSSProperties}>
       <AppSidebar />
       <SidebarInset>
         <Outlet />

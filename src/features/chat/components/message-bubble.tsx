@@ -10,9 +10,9 @@ export const MessageBubble = ({ role, content }: MessageBubbleProps) => {
   const isUser = role === "user"
 
   return (
-    <div className={`flex gap-2 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
+    <div className={`flex gap-2 ${!isUser ? "flex-row-reverse" : "flex-row"}`}>
       <Avatar className="flex bg-secondary  justify-center items-center">
-        {isUser ? <BotIcon className="p-0.5 stroke-black"/> : <UserIcon className="stroke-black"/>}
+        {isUser ? <UserIcon className="p-0.5 stroke-black"/> : <BotIcon className="stroke-black"/>}
       </Avatar>
       <div 
         className={`
