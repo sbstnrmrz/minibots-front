@@ -6,8 +6,8 @@ export const ConversationWindow = () => {
   const { messages, addUserMessage } = useMessages()
 
   return (
-    <div className="p-4">
-      <div className="flex flex-col gap-4">
+    <div className="flex flex-col h-full p-4 gap-4">
+      <div className="flex flex-col flex-1 gap-4 overflow-hidden">
         {messages.map((msg, i) => (
           <MessageBubble key={i} role={msg.role} content={msg.content} />
         ))}

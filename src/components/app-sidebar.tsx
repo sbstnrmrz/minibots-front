@@ -14,6 +14,8 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { UserDropdown } from "@/components/user-dropdown"
+import { Button } from "./ui/button"
+import { PlusIcon } from "lucide-react"
 
 // This is sample data.
 const data = {
@@ -164,30 +166,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           Minibots
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="px-2">
+        <Button className="flex justify-center">
+          <PlusIcon/>
+          Crear Agente 
+        </Button>
         <SidebarGroup>
-          <SidebarMenu className="gap-2">
-            {data.navMain.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
-                    {item.title}
-                  </a>
-                </SidebarMenuButton>
-                {item.items?.length ? (
-                  <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
-                    {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                ) : null}
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
