@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { SendIcon } from "lucide-react"
 import { useSocket } from "@/features/socket/hooks/useSocket"
+import { useChatSession } from "@/features/chat/ChatSessionProvider"
 
 interface Props {
   onSend: (content: string) => void
@@ -10,12 +11,18 @@ interface Props {
 
 export const MessageInput = ({ onSend }: Props) => {
   const { socket } = useSocket()
+  const { selectedBotId, chatId } = useChatSession()
   const [content, setContent] = useState("")
 
   const sendMessage = () => {
     if (!content.trim()) return
-    socket.emit("send_message", { content })
-    console.log('[socket] Sending message: ' + content)
+    if (selectedBotId == null) return
+    socket.emit("send_message", {
+      content,
+      role: "user",
+      bot_id: selectedBotId,
+      chat_id: chatId,
+    })
     onSend(content)
     setContent("")
   }
