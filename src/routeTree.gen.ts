@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ChatRouteImport } from './routes/chat'
+import { Route as AgentTiersRouteImport } from './routes/agent-tiers'
+import { Route as AgentSetupRouteImport } from './routes/agent-setup'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -17,6 +19,16 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',
   path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentTiersRoute = AgentTiersRouteImport.update({
+  id: '/agent-tiers',
+  path: '/agent-tiers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentSetupRoute = AgentSetupRouteImport.update({
+  id: '/agent-setup',
+  path: '/agent-setup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,32 +49,53 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agent-setup': typeof AgentSetupRoute
+  '/agent-tiers': typeof AgentTiersRoute
   '/chat': typeof ChatRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agent-setup': typeof AgentSetupRoute
+  '/agent-tiers': typeof AgentTiersRoute
   '/admin': typeof AdminIndexRoute
   '/chat': typeof ChatIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agent-setup': typeof AgentSetupRoute
+  '/agent-tiers': typeof AgentTiersRoute
   '/chat': typeof ChatRouteWithChildren
   '/admin/': typeof AdminIndexRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/admin/' | '/chat/'
+  fullPaths:
+    | '/'
+    | '/agent-setup'
+    | '/agent-tiers'
+    | '/chat'
+    | '/admin/'
+    | '/chat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/chat'
-  id: '__root__' | '/' | '/chat' | '/admin/' | '/chat/'
+  to: '/' | '/agent-setup' | '/agent-tiers' | '/admin' | '/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/agent-setup'
+    | '/agent-tiers'
+    | '/chat'
+    | '/admin/'
+    | '/chat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentSetupRoute: typeof AgentSetupRoute
+  AgentTiersRoute: typeof AgentTiersRoute
   ChatRoute: typeof ChatRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -74,6 +107,20 @@ declare module '@tanstack/react-router' {
       path: '/chat'
       fullPath: '/chat'
       preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent-tiers': {
+      id: '/agent-tiers'
+      path: '/agent-tiers'
+      fullPath: '/agent-tiers'
+      preLoaderRoute: typeof AgentTiersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent-setup': {
+      id: '/agent-setup'
+      path: '/agent-setup'
+      fullPath: '/agent-setup'
+      preLoaderRoute: typeof AgentSetupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -112,6 +159,8 @@ const ChatRouteWithChildren = ChatRoute._addFileChildren(ChatRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentSetupRoute: AgentSetupRoute,
+  AgentTiersRoute: AgentTiersRoute,
   ChatRoute: ChatRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
 }
